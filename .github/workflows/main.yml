@@ -2,78 +2,28 @@ name: Build Static Pages
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Generate Article Pages
+      - name: Run Generator Script
+        run: node generate-pages.js
+
+      - name: Commit Results
         run: |
-          mkdir -p article
-          node -e "
-          const fs = require('fs');
-          const articles = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
-          
-          // 读取你的主页模板
-          let html = fs.readFileSync('index.html', 'utf8');
-          
-          articles.forEach(article => {
-            // 替换标题
-            let newHtml = html.replace(/<title>.*?<\/title>/, \`<title>\${article.title} - tverse.online</title>\`);
-            // 替换正文容器
-            newHtml = newHtml.replace('<div id=\"root\"></div>', \`<div id=\"root\"><article style=\"max-width:800px;margin:40px auto;padding:20px;background:white;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);\">
-              <h1 style=\"font-size:28px;margin-bottom:16px;\">\${article.title}</h1>
-              <p style=\"color:#666;margin-bottom:24px;\">发布于 \${article.date}
-              <div style=\"line-height:1.8;font-size:16px;color:#333;\">\${article.content}</div>
-            </article></div>\`);
-            
-            fs.writeFileSync(\`article/\${article.id}.html\`, newHtml);
-          });
-          "
-
-      - name: Generate Sitemap
-        run: |
-          node -e "
-          const fs = require('fs');
-          const articles = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
-          const DOMAIN = 'https://tverse.online'; // 确保这是你的域名
-          
-          let urls = articles.map(a => \`
-            <url>
-              <loc>\${DOMAIN}/article/\${a.id}.html</loc>
-              <lastmod>\${a.date}</lastmod>
-              <changefreq>monthly</changefreq>
-              <priority>0.8</priority>
-            </url>\`).join('');
-
-          const sitemap = \`<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>
-<urlset xmlns=\\\"http://www.sitemaps.org/schemas/sitemap/0.9\\\">
-  <url>
-    <loc>\${DOMAIN}/</loc>
-    <lastmod>\${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-\${urls}
-</urlset>\`;
-
-          fs.writeFileSync('sitemap.xml', sitemap);
-          "
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions"
+          git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add .
-          git commit -m "Auto-generate 300 pages"
-          git push origin main
+          git commit -m "Auto-build pages" || echo "No changes"
+          git push
