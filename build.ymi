@@ -1,0 +1,33 @@
+name: Build Site
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 2. 设置 Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # 3. 运行脚本 (关键步骤)
+      - name: Generate Pages
+        run: node generate-pages.js
+
+      # 4. 提交生成的文件
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Auto-build pages" || echo "没有需要提交的内容"
+          git push
