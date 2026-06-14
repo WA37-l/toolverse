@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI神器导航 - 全球150+精选工具</title>
+    <meta name="keywords" content="AI工具,人工智能导航,AI绘画,AI写作,AI视频生成,效率工具,在线工具大全">
+    <meta name="description" content="Tverse.ai 精选全球150+优质AI工具与应用，涵盖AI绘画、文案写作、视频生成、编程开发等领域，助力个人与企业提效创新。">
+    <meta name="robots" content="index, follow">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117; --bg-secondary: #161b22; --card-bg: #21262d;
+            --text-main: #e6edf3; --text-sub: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-hover: #79c0ff;
+            --ad-bg: rgba(88, 166, 255, 0.05); --ad-border: rgba(88, 166, 255, 0.2);
+            --sidebar-width: 380px;
+        }
+        body.theme-light { --bg-primary: #f6f8fa; --bg-secondary: #ffffff; --card-bg: #ffffff; --text-main: #1f2328; --text-sub: #656d76; --border: #d0d7de; --accent: #0969da; --ad-bg: rgba(9, 105, 218, 0.05); --ad-border: rgba(9, 105, 218, 0.2); }
+        body.theme-pro { --bg-primary: #0a1929; --bg-secondary: #132f4c; --card-bg: #1a365d; --text-main: #e2e8f0; --text-sub: #a0aec0; --border: #2d3748; --accent: #4299e1; --ad-bg: rgba(66, 153, 225, 0.05); --ad-border: rgba(66, 153, 225, 0.2); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; }
+        .bg-soft { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.08), transparent), var(--bg-primary); }
+        
+        .app-container { display: flex; max-width: 1440px; margin: 0 auto; padding: 20px; gap: 20px; }
+        
+        /* 左侧主内容区 */
+        .main-content { flex: 1; min-width: 0; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 16px 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .logo { font-size: 22px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .search-bar { display: flex; align-items: center; background: var(--bg-primary); border-radius: 8px; padding: 8px 12px; width: 280px; border: 1px solid var(--border); }
+        .search-bar input { border: none; outline: none; background: transparent; padding: 4px 8px; color: var(--text-main); width: 100%; }
+        .search-bar button { background: var(--accent); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+        
+        /* 分类筛选 */
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; color: var(--text-sub); }
+        .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 工具网格 */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .tool-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+        .tool-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border: 1px solid var(--border); font-size: 20px; color: var(--accent); }
+        .tool-name { font-size: 16px; font-weight: 600; margin-top: 12px; }
+        .tool-desc { font-size: 13px; color: var(--text-sub); margin-top: 8px; flex-grow: 1; }
+        .tool-link { margin-top: 16px; padding: 8px 12px; background: var(--ad-bg); color: var(--accent); border-radius: 6px; text-align: center; font-size: 14px; font-weight: 500; border: 1px solid var(--ad-border); }
+        .tool-link:hover { background: var(--accent); color: white; }
+        
+        /* 右侧侧边栏 */
+        .sidebar-right { width: var(--sidebar-width); flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .sidebar-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--accent); }
+        
+        /* 热点新闻 */
+        .hot-list { display: flex; flex-direction: column; gap: 12px; }
+        .hot-item { display: flex; align-items: baseline; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .hot-rank { font-weight: bold; font-size: 14px; min-width: 20px; text-align: center; }
+        .hot-rank.top1 { color: #ff4d4f; }
+        .hot-rank.top2 { color: #faad14; }
+        .hot-rank.top3 { color: #52c41a; }
+        .hot-title { font-size: 14px; color: var(--text-main); text-decoration: none; flex: 1; line-height: 1.4; }
+        .hot-title:hover { color: var(--accent); text-decoration: underline; }
+        
+        /* 推荐工具 */
+        .rec-grid { display: flex; flex-direction: column; gap: 12px; }
+        .rec-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; transition: all 0.2s; border: 1px solid transparent; }
+        .rec-card:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .rec-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); font-size: 16px; color: var(--accent); }
+        .rec-name { font-size: 14px; font-weight: 600; }
+        .rec-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+        .rec-link { margin-left: auto; font-size: 12px; color: var(--accent); font-weight: 600; }
+        
+        /* SEO文章 */
+        .article-list { display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; padding-right: 5px; }
+        .article-item { padding: 12px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; }
+        .article-item:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .article-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .article-meta { font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; }
+        
+        /* 悬浮组件 */
+        .mini-player { position: fixed; bottom: 24px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 100; display: flex; align-items: center; gap: 12px; max-width: 280px; }
+        .player-ad { position: fixed; bottom: 100px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 99; width: 280px; text-align: center; }
+        .mini-player-controls { display: flex; align-items: center; gap: 8px; }
+        .mini-player-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; border: none; font-size: 12px; }
+        .mini-player-btn:hover { background: var(--accent-hover); transform: scale(1.1); }
+        .theme-switcher { position: fixed; bottom: 24px; left: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 99; }
+        .theme-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .theme-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 模态框 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; text-align: center; position: relative; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .qr-container { background: white; padding: 16px; border-radius: 12px; display: inline-block; margin: 24px 0; }
+        
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .app-container { flex-direction: column; }
+            .sidebar-right { width: 100%; }
+            .mini-player, .player-ad { display: none; } /* 移动端隐藏悬浮组件 */
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-soft"></div>
+    
+    <div class="app-container">
+        <!-- 左侧主内容区 -->
+        <div class="main-content">
+            <header>
+                <div class="logo"><i class="fas fa-robot"></i> AI神器导航</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="搜索工具...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <button onclick="openAboutModal()" class="px-6 py-3 rounded-xl font-bold" style="background: var(--accent); color: white;">💰 商务合作</button>
+            </header>
+            
+            <div class="category-tabs" id="categoryTabs">
+                <!-- 分类由JS生成 -->
+            </div>
+            
+            <div class="tools-grid" id="toolsGrid">
+                <!-- 工具由JS生成 -->
+            </div>
+        </div>
+        
+        <!-- 右侧侧边栏 -->
+        <div class="sidebar-right">
+            <!-- AI每日热点 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-bolt"></i> AI 每日热点</h3>
+                <div class="hot-list" id="hotList">
+                    <!-- 热点由JS生成 -->
+                </div>
+            </div>
+            
+            <!-- 今日工具推荐 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-star"></i> 今日工具推荐</h3>
+                <div class="rec-grid" id="recGrid">
+                    <!-- 推荐由JS生成 -->
+                </div>
+            </div>
+            
+            <!-- SEO文章 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-newspaper"></i> AI行业智库 (300篇)</h3>
+                <div class="article-list" id="articleList">
+                    <!-- 文章由JS生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 悬浮广告 -->
+    <div class="player-ad"><div class="ad-label">推广</div><div style="color: var(--text-sub); font-size: 14px;"><i class="fas fa-rocket mb-2"></i><div>悬浮广告位</div><small>用户停留时间长 | 转化率高</small></div></div></div>
+    
+    <!-- 音乐播放器 -->
+    <div class="mini-player">
+        <div class="flex-1 min-w-0"><div class="font-semibold text-sm truncate" id="currentSongTitle">选择歌曲</div><div class="text-xs" style="color: var(--text-sub);" id="currentArtist">本地音源</div></div>
+        <div class="mini-player-controls">
+            <button onclick="prevSong()" class="mini-player-btn"><i class="fas fa-step-backward"></i></button>
+            <button onclick="togglePlay()" id="playPauseBtn" class="mini-player-btn"><i class="fas fa-play"></i></button>
+            <button onclick="nextSong()" class="mini-player-btn"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <audio id="audioPlayer"></audio>
+    </div>
+    
+    <!-- 主题切换 -->
+    <div class="theme-switcher">
+        <div class="theme-btn" onclick="setTheme('dark')" title="暗黑模式"><i class="fas fa-moon"></i></div>
+        <div class="theme-btn" onclick="setTheme('light')" title="白亮模式"><i class="fas fa-sun"></i></div>
+        <div class="theme-btn" onclick="setTheme('pro')" title="专业模式"><i class="fas fa-briefcase"></i></div>
+    </div>
+    
+    <!-- 商务合作模态框 -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeAboutModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--accent);">🚀 商务合作</h2>
+            <div class="text-left mb-6 space-y-4" style="color: var(--text-sub); font-size: 14px;">
+                <p><strong style="color: var(--text-main);">平台简介：</strong>AI神器导航是中国领先的AI工具聚合平台，专注于为全球用户提供最前沿、最实用的AI工具导航服务。</p>
+                <p><strong style="color: var(--text-main);">流量优势：</strong>覆盖AI绘画、写作、编程等15个垂直领域，用户精准度高，转化意愿强。</p>
+                <p><strong style="color: var(--text-main);">合作权益：</strong>提供首页Banner、工具置顶、原生内容植入等多种合作形式。</p>
+            </div>
+            <div class="qr-container"><img src="weixin.png" onerror="this.src='https://via.placeholder.com/200/21262d/e6edf3?text=weixin.png'" class="w-48 h-48"></div>
+            <div class="mt-6 space-y-3 text-left">
+                <div class="flex items-center gap-3 p-3 rounded-lg" style="background: var(--bg-primary);"><i class="fas fa-envelope" style="color: #ea4335;"></i><div><div class="font-bold text-sm">商务邮箱</div><div class="text-xs" style="color: var(--text-sub);">kvgzhx323@163.com</div></div></div>
+                <div class="flex items-center gap-3 p-3 rounded-lg" style="background: var(--bg-primary);"><i class="fab fa-weixin" style="color: #07c160;"></i><div><div class="font-bold text-sm">微信客服</div><div class="text-xs" style="color: var(--text-sub);">j12340987655</div></div></div>
+            </div>
+            <button onclick="closeAboutModal()" class="mt-8 w-full py-3 rounded-xl font-bold" style="background: var(--accent); color: white;">立即咨询</button>
+        </div>
+    </div>
+    
+    <!-- 关于我们模态框 -->
+    <div id="aboutUsModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <button onclick="closeAboutUsModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--accent);">关于 AI神器导航</h2>
+            <div class="space-y-4" style="color: var(--text-sub); font-size: 14px; line-height: 1.8;">
+                <p>tverse.online 是一个 AI 工具导航与资讯站点，帮助开发者、创作者和普通用户快速发现、试用和评估全球最前沿的 AI 工具。</p>
+                <p>我们坚持中立筛选，不收取排名费用，致力于提升信息获取效率。</p>
+                <p><strong style="color: var(--text-main);">商务合作：</strong> <a href="mailto:kvgzhx323@163.com" style="color: var(--accent);">kvgzhx323@163.com</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 隐私政策模态框 -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left; max-height: 80vh; overflow-y: auto;">
+            <button onclick="closePrivacyModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--accent);">隐私政策</h2>
+            <div class="space-y-4" style="color: var(--text-sub); font-size: 14px; line-height: 1.8;">
+                <h3 style="color: var(--text-main); font-size: 16px;">1. 信息收集</h3>
+                <p>本站为工具导航与资讯展示站点，原则上不主动收集姓名、电话等个人身份信息。页面交互数据（如点击跳转、播放器操作）由浏览器本地处理。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">2. Cookie 与第三方广告</h3>
+                <p>若启用第三方广告服务（如 Google AdSense），相关服务商可能通过 Cookie 投放广告并记录匿名信息，具体以第三方隐私政策为准。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">3. 外部链接</h3>
+                <p>本站包含大量外部工具链接，跳转后由目标站点负责其隐私条款。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">4. 联系</h3>
+                <p>如有疑问请联系：<a href="mailto:kvgzhx323@163.com" style="color: var(--accent);">kvgzhx323@163.com</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div style="text-align:center;padding:24px 0;font-size:12px;color:#8b949e">
+      <a href="javascript:void(0);" onclick="openAboutUsModal()" style="color:#8b949e;text-decoration:none">关于</a>
+      &nbsp;·&nbsp;
+      <a href="javascript:void(0);" onclick="openPrivacyModal()" style="color:#8b949e;text-decoration:none">隐私政策</a>
+    </div>
+
+    <script>
+        // ====================== 分类数据 ======================
+        const categories = [
+            { id: 'all', name: '全部工具', icon: 'fa-star' },
+            { id: 'writing', name: 'AI写作', icon: 'fa-pen' },
+            { id: 'ppt', name: 'AI PPT', icon: 'fa-file-powerpoint' },
+            { id: 'image', name: 'AI绘画', icon: 'fa-image' },
+            { id: 'office', name: 'AI办公', icon: 'fa-briefcase' },
+            { id: 'coding', name: 'AI编程', icon: 'fa-code' },
+            { id: 'design', name: 'AI设计', icon: 'fa-palette' },
+            { id: 'audio', name: 'AI音频', icon: 'fa-microphone' },
+            { id: 'video', name: 'AI视频', icon: 'fa-video' },
+            { id: 'fun', name: 'AI趣味', icon: 'fa-gamepad' },
+            { id: 'job', name: 'AI求职', icon: 'fa-user-tie' },
+            { id: 'translate', name: 'AI翻译', icon: 'fa-language' },
+            { id: 'learn', name: 'AI学习', icon: 'fa-graduation-cap' },
+            { id: 'legal', name: 'AI法律', icon: 'fa-scale-balanced' }
+        ];
+
+        // ====================== 150个工具数据 ======================
+        const tools = [
+            // AI写作 (10个)
+            { name: "ChatGPT", desc: "OpenAI推出的对话式AI模型，能够回答问题、撰写文章、调试代码。", url: "https://chat.openai.com", category: "writing", icon: "fa-robot" },
+            { name: "Kimi", desc: "月之暗面科技推出的长文本AI助手，支持200万字上下文输入。", url: "https://kimi.moonshot.cn", category: "writing", icon: "fa-moon" },
+            { name: "文心一言", desc: "百度研发的ERNIE系列大模型，在中文理解、文学创作方面有深厚积累。", url: "https://yiyan.baidu.com", category: "writing", icon: "fa-baidu" },
+            { name: "通义千问", desc: "阿里云推出的大模型，具备多模态理解和生成能力。", url: "https://qianwen.aliyun.com", category: "writing", icon: "fa-cloud" },
+            { name: "讯飞星火", desc: "科大讯飞推出的认知大模型，在语音交互、教育学习方面表现优异。", url: "https://xinghuo.xfyun.cn", category: "writing", icon: "fa-fire" },
+            { name: "智谱清言", desc: "清华大学知识工程实验室推出的GLM系列模型，学术能力强。", url: "https://chatglm.cn", category: "writing", icon: "fa-graduation-cap" },
+            { name: "豆包", desc: "字节跳动推出的AI助手，支持多模态交互，在抖音生态内应用广泛。", url: "https://www.doubao.com", category: "writing", icon: "fa-dove" },
+            { name: "Notion AI", desc: "集成在Notion笔记软件中的AI助手，擅长文档总结、内容扩写。", url: "https://notion.so", category: "writing", icon: "fa-note-sticky" },
+            { name: "Jasper", desc: "专注于营销文案生成的AI工具，支持博客、广告、邮件等场景。", url: "https://jasper.ai", category: "writing", icon: "fa-bullhorn" },
+            { name: "Copy.ai", desc: "快速生成社交媒体文案、产品描述和广告语的AI工具。", url: "https://copy.ai", category: "writing", icon: "fa-copy" },
+
+            // AI PPT (10个)
+            { name: "Gamma", desc: "AI驱动的下一代演示工具，能快速将想法转化为精美的演示文稿。", url: "https://gamma.app", category: "ppt", icon: "fa-film" },
+            { name: "Tome", desc: "结合叙事与AI设计的演示工具，适合讲故事和产品展示。", url: "https://tome.app", category: "ppt", icon: "fa-book-open" },
+            { name: "Beautiful.ai", desc: "智能PPT设计工具，内置数千个专业模板，自动调整布局。", url: "https://beautiful.ai", category: "ppt", icon: "fa-magic" },
+            { name: "iSlide", desc: "PPT插件神器，拥有海量图标、模板和图示，大幅提升制作效率。", url: "https://www.islide.cc", category: "ppt", icon: "fa-sliders-h" },
+            { name: "Canva", desc: "全球知名的在线设计平台，AI功能可快速生成PPT、海报等。", url: "https://www.canva.cn", category: "ppt", icon: "fa-shapes" },
+            { name: "WPS AI", desc: "金山办公推出的AI助手，深度集成WPS套件，支持智能生成。", url: "https://www.wps.cn", category: "ppt", icon: "fa-file-word" },
+            { name: "Prezi", desc: "动态演示工具，打破传统线性PPT，提供缩放和旋转的交互体验。", url: "https://prezi.com", category: "ppt", icon: "fa-sync-alt" },
+            { name: "SlidesAI", desc: "直接在Google Slides中工作的AI插件，根据文本自动生成幻灯片。", url: "https://slidesai.io", category: "ppt", icon: "fa-file-powerpoint" },
+            { name: "Decktopus", desc: "智能PPT生成器，只需输入主题即可生成完整的演示文稿。", url: "https://decktopus.com", category: "ppt", icon: "fa-layer-group" },
+            { name: "Pitch", desc: "面向团队的现代化演示软件，协作功能强大，AI辅助设计提升效率。", url: "https://pitch.com", category: "ppt", icon: "fa-handshake" },
+
+            // AI绘画 (10个)
+            { name: "Midjourney", desc: "Discord上的顶级AI绘画工具，以生成艺术感强、细节丰富的图像著称。", url: "https://midjourney.com", category: "image", icon: "fa-palette" },
+            { name: "Stable Diffusion", desc: "开源的AI绘画模型，支持本地部署和个性化训练，自由度极高。", url: "https://stability.ai", category: "image", icon: "fa-seedling" },
+            { name: "DALL·E 3", desc: "OpenAI的图像生成模型，语义理解能力极强，能精确还原复杂提示词。", url: "https://openai.com/dall-e", category: "image", icon: "fa-theater-masks" },
+            { name: "文心一格", desc: "百度推出的AI艺术和创意辅助平台，支持多种中国画风格生成。", url: "https://yige.baidu.com", category: "image", icon: "fa-paint-brush" },
+            { name: "Leonardo.ai", desc: "专注于游戏资产和概念设计的AI工具，生成质量高，控制精细。", url: "https://leonardo.ai", category: "image", icon: "fa-gamepad" },
+            { name: "DreamStudio", desc: "Stability AI官方的Web界面，使用简单，生成速度快。", url: "https://dreamstudio.ai", category: "image", icon: "fa-cloud-sun" },
+            { name: "Playground AI", desc: "免费的在线AI画板，每天赠送大量免费额度，适合初学者。", url: "https://playgroundai.com", category: "image", icon: "fa-child" },
+            { name: "Bing Image Creator", desc: "微软必应集成的DALL·E模型，免费使用，无需科学上网。", url: "https://www.bing.com/images/create", category: "image", icon: "fa-search" },
+            { name: "Craiyon", desc: "免费的AI绘画工具，原名DALL·E Mini，可以快速生成有趣的图像。", url: "https://www.craiyon.com", category: "image", icon: "fa-paint-roller" },
+            { name: "Artbreeder", desc: "通过混合基因的方式生成图像，特别适合创作角色和风景。", url: "https://www.artbreeder.com", category: "image", icon: "fa-dna" },
+
+            // AI设计 (10个)
+            { name: "Figma", desc: "云端协作UI设计工具，AI插件生态丰富。", url: "https://figma.com", category: "design", icon: "fa-figma" },
+            { name: "Adobe Firefly", desc: "Adobe全家桶的AI创意引擎。", url: "https://www.adobe.com/firefly", category: "design", icon: "fa-fire" },
+            { name: "Framer", desc: "AI生成交互式网站原型。", url: "https://framer.com", category: "design", icon: "fa-window-maximize" },
+            { name: "Sketch", desc: "经典的矢量设计工具。", url: "https://sketch.com", category: "design", icon: "fa-drafting-compass" },
+            { name: "MasterGo", desc: "国产在线协作设计工具。", url: "https://mastergo.com", category: "design", icon: "fa-paint-brush" },
+            { name: "即时设计", desc: "另一款优秀的国产设计工具。", url: "https://js.design", category: "design", icon: "fa-bolt" },
+            { name: "Uizard", desc: "将手绘草图转为UI设计。", url: "https://uizard.io", category: "design", icon: "fa-pencil-ruler" },
+            { name: "Khroma", desc: "AI配色方案生成工具。", url: "https://khroma.co", category: "design", icon: "fa-palette" },
+            { name: "Designs.ai", desc: "一站式AI设计平台。", url: "https://designs.ai", category: "design", icon: "fa-robot" },
+            { name: "Looka", desc: "AI生成Logo和品牌视觉。", url: "https://looka.com", category: "design", icon: "fa-tag" },
+
+            // AI编程 (10个)
+            { name: "GitHub Copilot", desc: "AI结对编程助手。", url: "https://github.com/features/copilot", category: "coding", icon: "fa-github" },
+            { name: "Cursor", desc: "AI代码编辑器。", url: "https://cursor.sh", category: "coding", icon: "fa-mouse-pointer" },
+            { name: "Trae", desc: "国产AI IDE。", url: "https://www.trae.com.cn", category: "coding", icon: "fa-code" },
+            { name: "Replit", desc: "云端开发环境。", url: "https://replit.com", category: "coding", icon: "fa-redo" },
+            { name: "CodePen", desc: "前端代码演示。", url: "https://codepen.io", category: "coding", icon: "fa-codepen" },
+            { name: "Tabnine", desc: "AI代码补全。", url: "https://www.tabnine.com", category: "coding", icon: "fa-bolt" },
+            { name: "Codeium", desc: "免费Copilot替代。", url: "https://codeium.com", category: "coding", icon: "fa-free-code-camp" },
+            { name: "Amazon CodeWhisperer", desc: "AWS代码助手。", url: "https://aws.amazon.com/codewhisperer", category: "coding", icon: "fa-aws" },
+            { name: "Sourcegraph Cody", desc: "AI代码搜索。", url: "https://sourcegraph.com/cody", category: "coding", icon: "fa-search" },
+            { name: "Mutable.ai", desc: "AI文档生成。", url: "https://mutable.ai", category: "coding", icon: "fa-file-code" },
+
+            // AI办公 (10个)
+            { name: "Notion", desc: "全能的笔记、文档、项目管理工具。", url: "https://notion.so", category: "office", icon: "fa-note-sticky" },
+            { name: "WPS Office", desc: "国产办公套件，WPS AI支持文档写作。", url: "https://www.wps.cn", category: "office", icon: "fa-file-word" },
+            { name: "Microsoft 365 Copilot", desc: "微软办公套件的AI助手。", url: "https://www.microsoft.com/microsoft-365/copilot", category: "office", icon: "fa-microsoft" },
+            { name: "Google Workspace AI", desc: "谷歌办公套件的AI功能。", url: "https://workspace.google.com", category: "office", icon: "fa-google" },
+            { name: "飞书", desc: "字节跳动推出的企业协作平台。", url: "https://www.feishu.cn", category: "office", icon: "fa-rocket" },
+            { name: "钉钉", desc: "阿里巴巴推出的企业级智能移动办公平台。", url: "https://www.dingtalk.com", category: "office", icon: "fa-thumbtack" },
+            { name: "腾讯文档", desc: "腾讯推出的在线协作文档。", url: "https://docs.qq.com", category: "office", icon: "fa-file-lines" },
+            { name: "语雀", desc: "蚂蚁集团推出的知识创作工具。", url: "https://www.yuque.com", category: "office", icon: "fa-book" },
+            { name: "印象笔记", desc: "全球知名的笔记应用。", url: "https://www.yinxiang.com", category: "office", icon: "fa-elephant" },
+            { name: "OneNote", desc: "微软推出的数字笔记本。", url: "https://www.onenote.com", category: "office", icon: "fa-notebook" },
+
+            // AI音频 (10个)
+            { name: "ElevenLabs", desc: "顶级AI语音合成和克隆工具。", url: "https://elevenlabs.io", category: "audio", icon: "fa-microphone" },
+            { name: "Murf", desc: "AI语音生成平台。", url: "https://murf.ai", category: "audio", icon: "fa-headphones" },
+            { name: "Descript", desc: "像编辑文档一样编辑音频和视频。", url: "https://descript.com", category: "audio", icon: "fa-scissors" },
+            { name: "Audacity", desc: "免费开源的音频编辑软件。", url: "https://www.audacityteam.org", category: "audio", icon: "fa-headphones-simple" },
+            { name: "Adobe Audition", desc: "专业级音频编辑软件。", url: "https://www.adobe.com/products/audition.html", category: "audio", icon: "fa-volume-high" },
+            { name: "Soundraw", desc: "AI音乐生成工具。", url: "https://soundraw.io", category: "audio", icon: "fa-music" },
+            { name: "AIVA", desc: "AI作曲助手。", url: "https://www.aiva.ai", category: "audio", icon: "fa-music" },
+            { name: "Amper Music", desc: "AI音乐创作平台。", url: "https://www.ampermusic.com", category: "audio", icon: "fa-guitar" },
+            { name: "Lalal.ai", desc: "AI音频分离工具。", url: "https://www.lalal.ai", category: "audio", icon: "fa-wave-square" },
+            { name: "Voice.ai", desc: "实时AI变声器。", url: "https://voice.ai", category: "audio", icon: "fa-mask" },
+
+            // AI视频 (10个)
+            { name: "Runway", desc: "AI视频生成和编辑工具。", url: "https://runwayml.com", category: "video", icon: "fa-film" },
+            { name: "Pika Labs", desc: "新兴的AI视频生成工具。", url: "https://pika.art", category: "video", icon: "fa-kiwi-bird" },
+            { name: "HeyGen", desc: "AI数字人视频生成平台。", url: "https://heygen.com", category: "video", icon: "fa-user" },
+            { name: "CapCut", desc: "字节跳动推出的免费视频编辑软件。", url: "https://capcut.com", category: "video", icon: "fa-cut" },
+            { name: "Descript", desc: "通过编辑文字来编辑视频。", url: "https://descript.com", category: "video", icon: "fa-video" },
+            { name: "Lumen5", desc: "将博客文章自动转换为社交媒体视频。", url: "https://lumen5.com", category: "video", icon: "fa-video-camera" },
+            { name: "Synthesia", desc: "企业级AI视频生成平台。", url: "https://www.synthesia.io", category: "video", icon: "fa-building" },
+            { name: "Pictory", desc: "将长视频自动转换为短视频摘要。", url: "https://pictory.ai", category: "video", icon: "fa-mobile-alt" },
+            { name: "Invideo AI", desc: "AI视频生成工具。", url: "https://invideo.io", category: "video", icon: "fa-video" },
+            { name: "Kaiber", desc: "AI音乐视频生成工具。", url: "https://www.kaiber.ai", category: "video", icon: "fa-music" },
+
+            // AI趣味 (10个)
+            { name: "Character.AI", desc: "与AI角色对话。", url: "https://character.ai", category: "fun", icon: "fa-robot" },
+            { name: "Replika", desc: "AI陪伴聊天机器人。", url: "https://replika.com", category: "fun", icon: "fa-heart" },
+            { name: "AI Dungeon", desc: "AI文字冒险游戏。", url: "https://play.aidungeon.io", category: "fun", icon: "fa-dice" },
+            { name: "NovelAI", desc: "AI故事创作工具。", url: "https://novelai.net", category: "fun", icon: "fa-book" },
+            { name: "Dream by Wombo", desc: "简单的AI绘画应用。", url: "https://dream.ai", category: "fun", icon: "fa-cloud" },
+            { name: "Craiyon", desc: "免费的AI绘画工具。", url: "https://www.craiyon.com", category: "fun", icon: "fa-paint-roller" },
+            { name: "This Person Does Not Exist", desc: "生成完全不存在的人脸照片。", url: "https://thispersondoesnotexist.com", category: "fun", icon: "fa-user-secret" },
+            { name: "AI Image Enlarger", desc: "AI放大图片。", url: "https://imgupscaler.com", category: "fun", icon: "fa-search-plus" },
+            { name: "Remove.bg", desc: "AI一键抠图。", url: "https://www.remove.bg", category: "fun", icon: "fa-cut" },
+            { name: "Cleanup.pictures", desc: "AI去除图片中的杂物。", url: "https://cleanup.pictures", category: "fun", icon: "fa-broom" },
+
+            // AI求职 (10个)
+            { name: "LinkedIn", desc: "全球最大的职业社交平台。", url: "https://www.linkedin.com", category: "job", icon: "fa-linkedin" },
+            { name: "BOSS直聘", desc: "中国领先的招聘平台。", url: "https://www.zhipin.com", category: "job", icon: "fa-bullseye" },
+            { name: "猎聘", desc: "中高端人才招聘平台。", url: "https://www.liepin.com", category: "job", icon: "fa-crosshairs" },
+            { name: "前程无忧", desc: "综合招聘服务平台。", url: "https://www.51job.com", category: "job", icon: "fa-file-lines" },
+            { name: "智联招聘", desc: "中国领先的招聘网站。", url: "https://www.zhaopin.com", category: "job", icon: "fa-link" },
+            { name: "拉勾网", desc: "互联网招聘平台。", url: "https://www.lagou.com", category: "job", icon: "fa-fishing-rod" },
+            { name: "牛客网", desc: "程序员求职刷题平台。", url: "https://www.nowcoder.com", category: "job", icon: "fa-cow" },
+            { name: "实习僧", desc: "大学生实习平台。", url: "https://www.shixiseng.com", category: "job", icon: "fa-graduation-cap" },
+            { name: "应届生求职网", desc: "应届毕业生求职平台。", url: "https://www.yingjiesheng.com", category: "job", icon: "fa-user-graduate" },
+            { name: "海投网", desc: "校园招聘平台。", url: "https://www.haitou.cc", category: "job", icon: "fa-water" },
+
+            // AI翻译 (10个)
+            { name: "DeepL", desc: "最准确的翻译工具。", url: "https://www.deepl.com/translator", category: "translate", icon: "fa-language" },
+            { name: "谷歌翻译", desc: "全球最流行的翻译工具。", url: "https://translate.google.com", category: "translate", icon: "fa-google" },
+            { name: "百度翻译", desc: "中国领先的翻译工具。", url: "https://fanyi.baidu.com", category: "translate", icon: "fa-baidu" },
+            { name: "有道翻译", desc: "网易有道翻译。", url: "https://fanyi.youdao.com", category: "translate", icon: "fa-book" },
+            { name: "腾讯翻译君", desc: "腾讯AI翻译。", url: "https://fanyi.qq.com", category: "translate", icon: "fa-qq" },
+            { name: "微软必应翻译", desc: "微软翻译工具。", url: "https://www.bing.com/translator", category: "translate", icon: "fa-microsoft" },
+            { name: "Papago", desc: "韩国NAVER翻译。", url: "https://papago.naver.com", category: "translate", icon: "fa-language" },
+            { name: "iTranslate", desc: "iOS翻译应用。", url: "https://www.itranslate.com", category: "translate", icon: "fa-language" },
+            { name: "Translate.com", desc: "专业翻译平台。", url: "https://www.translate.com", category: "translate", icon: "fa-language" },
+            { name: "Linguee", desc: "词典和翻译。", url: "https://www.linguee.com", category: "translate", icon: "fa-book" },
+
+            // AI学习 (10个)
+            { name: "Coursera", desc: "全球顶尖大学在线课程。", url: "https://www.coursera.org", category: "learn", icon: "fa-university" },
+            { name: "edX", desc: "哈佛大学和麻省理工在线课程。", url: "https://www.edx.org", category: "learn", icon: "fa-graduation-cap" },
+            { name: "Udemy", desc: "全球最大在线技能学习平台。", url: "https://www.udemy.com", category: "learn", icon: "fa-laptop" },
+            { name: "Khan Academy", desc: "免费在线教育平台。", url: "https://www.khanacademy.org", category: "learn", icon: "fa-school" },
+            { name: "Duolingo", desc: "语言学习平台。", url: "https://www.duolingo.com", category: "learn", icon: "fa-language" },
+            { name: "Skillshare", desc: "创意技能学习平台。", url: "https://www.skillshare.com", category: "learn", icon: "fa-paint-brush" },
+            { name: "MasterClass", desc: "大师课平台。", url: "https://www.masterclass.com", category: "learn", icon: "fa-chalkboard-teacher" },
+            { name: "Codecademy", desc: "编程学习平台。", url: "https://www.codecademy.com", category: "learn", icon: "fa-code" },
+            { name: "freeCodeCamp", desc: "免费编程学习。", url: "https://www.freecodecamp.org", category: "learn", icon: "fa-free-code-camp" },
+            { name: "可汗学院", desc: "免费教育资源。", url: "https://zh.khanacademy.org", category: "learn", icon: "fa-school" },
+
+            // AI法律 (10个)
+            { name: "北大法宝", desc: "中国法律数据库。", url: "https://www.pkulaw.com", category: "legal", icon: "fa-balance-scale" },
+            { name: "威科先行", desc: "法律信息服务平台。", url: "https://law.wkinfo.com.cn", category: "legal", icon: "fa-balance-scale-right" },
+            { name: "律商联讯", desc: "全球法律信息提供商。", url: "https://www.lexisnexis.com", category: "legal", icon: "fa-gavel" },
+            { name: "无讼", desc: "律师服务平台。", url: "https://www.itslaw.com", category: "legal", icon: "fa-scale-balanced" },
+            { name: "法大大", desc: "电子合同平台。", url: "https://www.fadada.com", category: "legal", icon: "fa-file-contract" },
+            { name: "e签宝", desc: "电子签名平台。", url: "https://www.esign.cn", category: "legal", icon: "fa-signature" },
+            { name: "LegalZoom", desc: "在线法律服务。", url: "https://www.legalzoom.com", category: "legal", icon: "fa-gavel" },
+            { name: "Rocket Lawyer", desc: "在线法律文档。", url: "https://www.rocketlawyer.com", category: "legal", icon: "fa-file-contract" },
+            { name: "LawDepot", desc: "法律文档模板。", url: "https://www.lawdepot.com", category: "legal", icon: "fa-file-alt" },
+            { name: "Nolo", desc: "法律自助服务。", url: "https://www.nolo.com", category: "legal", icon: "fa-book" }
+        ];
+
+        // ====================== 300篇SEO文章 ======================
+        const seoArticles = [];
+        const baseTitles = [
+            "2026年AI工具排行榜：改变未来的10大神器", "ChatGPT完全指南：从入门到精通", "Midjourney提示词工程：生成大师级画作",
+            "AI写作工具横评：哪款最适合自媒体？", "如何用AI工具在一天内完成一周的工作", "AI视频生成工具Runway入门教程",
+            "Stable Diffusion本地部署保姆级教程", "AI编程助手Copilot使用技巧", "AI设计工具Figma进阶指南", "AI配音工具ElevenLabs详细评测",
+            "AI绘画变现：如何从0到1赚到第一桶金", "AI副业指南：普通人如何利用AI月入过万", "AI数字人直播：24小时自动带货实战",
+            "AI法律助手：合同审查与风险评估", "AI医疗诊断：辅助医生的新利器", "AI教育革命：个性化学习的未来",
+            "AI金融风控：智能投顾与量化交易", "AI游戏开发：自动生成关卡与剧情", "AI音乐创作：从旋律到歌词的全流程",
+            "AI翻译工具横评：打破语言壁垒", "AI简历优化：轻松通过HR筛选", "AI面试助手：实时答疑与反馈",
+            "AI科研助手：文献综述与数据分析", "AI电商运营：自动生成详情页与客服", "AI短视频创作：一键生成爆款脚本",
+            "AI模型微调：训练专属私有模型", "AI伦理与安全：如何防范风险？", "AI算力租赁：低成本跑大模型的秘诀",
+            "AI开源项目推荐：值得关注的GitHub宝藏", "AI行业报告：2026年趋势预测"
+        ];
+
+        const contentSnippets = {
+            intro: ["随着人工智能技术的飞速发展...", "在数字化转型的浪潮下...", "对于现代职场人和创作者而言..."],
+            tech: ["核心技术基于Transformer架构...", "采用了最新的Diffusion模型...", "基于MoE混合专家架构..."],
+            caseStudy: ["在医疗领域，该工具已被用于...", "某知名电商利用该技术...", "一家初创公司利用此工具..."],
+            future: ["未来三年，我们将看到多模态融合...", "AGI的探索将加速...", "随着监管政策的完善..."],
+            tips: ["<strong>避坑指南：</strong>新手常犯的错误...", "<strong>变现建议：</strong>不要只停留在工具使用层面...", "<strong>学习路径：</strong>建议先精通一款工具..."]
+        };
+
+        for (let i = 1; i <= 300; i++) {
+            const titleIndex = (i - 1) % baseTitles.length;
+            const title = baseTitles[titleIndex];
+            const snippetIndex = i % Object.keys(contentSnippets).length;
+            const keys = Object.keys(contentSnippets);
+            
+            let content = "";
+            content += `<p>${contentSnippets.intro[snippetIndex % contentSnippets.intro.length]}</p>`;
+            content += `<h3>技术原理深度剖析</h3><p>${contentSnippets.tech[snippetIndex % contentSnippets.tech.length]}</p>`;
+            content += `<h3>行业应用案例分析</h3><p>${contentSnippets.caseStudy[snippetIndex % contentSnippets.caseStudy.length]}</p>`;
+            content += `<h3>未来发展趋势预测</h3><p>${contentSnippets.future[snippetIndex % contentSnippets.future.length]}</p>`;
+            content += `<blockquote>${contentSnippets.tips[snippetIndex % contentSnippets.tips.length]}</blockquote>`;
+            content += `<h3>实操建议</h3><p>建议您从最简单的场景入手，例如使用 <code>${title.split(' ')[0]}</code> 来处理日常工作中的重复性任务。</p>`;
+
+            seoArticles.push({ id: i, title: `${title} - 第${i}篇`, date: `2026-01-${String((i % 28) + 1).padStart(2, '0')}`, views: `${Math.floor(Math.random() * 10) + 1}.${Math.floor(Math.random() * 9)}万`, content: content });
+        }
+
+        // ====================== 音乐数据 ======================
+        const songs = [{ title: "changes", artist: "Local Artist" }, { title: "lursic", artist: "Local Artist" }, { title: "mystery-of-love", artist: "Local Artist" }];
+
+        // ====================== 手动热点数据 ======================
+        const manualHotNews = [
+            { title: "OpenAI发布全新多模态模型 GPT-5", url: "https://openai.com/blog/new-model", rank: 1 },
+            { title: "AI视频生成工具Runway推出Gen-3 Alpha", url: "https://runwayml.com/blog/gen-3", rank: 2 },
+            { title: "谷歌I/O大会发布Gemini 1.5 Pro", url: "https://blog.google/technology/ai/google-io-2024/", rank: 3 },
+            { title: "苹果WWDC宣布将AI融入全系操作系统", url: "https://www.apple.com/newsroom/", rank: 4 },
+            { title: "国内大模型价格战爆发，多家厂商宣布降价", url: "https://www.36kr.com/newsflashes", rank: 5 },
+            { title: "Meta开源Llama 4模型，参数突破万亿级别", url: "https://ai.meta.com/research/", rank: 6 },
+            { title: "微软Copilot全面集成Windows 12系统", url: "https://www.microsoft.com/copilot", rank: 7 },
+            { title: "AI芯片巨头NVIDIA发布新一代Blackwell架构", url: "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/", rank: 8 },
+            { title: "AI安全新规出台：生成式AI服务管理办法", url: "https://www.gov.cn/zhengce/2024-02/29/content_6934432.htm", rank: 9 },
+            { title: "2026年全球AI市场规模预计突破万亿美元", url: "https://www.statista.com/topics/3104/artificial-intelligence-ai/", rank: 10 }
+        ];
+
+        // ====================== 应用逻辑 ======================
+        let currentCategory = 'all';
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        function init() {
+            renderCategories();
+            renderTools();
+            renderSEO();
+            renderHotNews();
+            renderDailyRecs();
+            setupMusicPlayer();
+            setTheme('dark');
+            document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+        }
+
+        function renderCategories() {
+            const tabs = document.getElementById('categoryTabs');
+            tabs.innerHTML = categories.map(cat => `
+                <button class="tab-btn" data-category="${cat.id}" onclick="filterTools('${cat.id}')">
+                    <i class="fas ${cat.icon} mr-2"></i> ${cat.name}
+                </button>
+            `).join('');
+        }
+
+        function renderTools() {
+            const filteredTools = currentCategory === 'all' 
+                ? tools 
+                : tools.filter(tool => tool.category === currentCategory);
+            
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = filteredTools.map(tool => `
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas ${tool.icon}"></i></div>
+                    <div class="tool-name">${tool.name}</div>
+                    <div class="tool-desc">${tool.desc}</div>
+                    <a href="${tool.url}" target="_blank" class="tool-link">立即访问 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            `).join('');
+        }
+
+        function renderSEO() {
+            const list = document.getElementById('articleList');
+            list.innerHTML = seoArticles.map(article => `
+                <div class="article-item" onclick="goToArticle(${article.id})">
+                    <div class="article-title">${article.title}</div>
+                    <div class="article-meta">
+                        <span>发布于 ${article.date}</span>
+                        <span>${article.views} 阅读</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHotNews() {
+            const list = document.getElementById('hotList');
+            list.innerHTML = manualHotNews.map(item => `
+                <a href="${item.url}" target="_blank" class="hot-item">
+                    <div class="hot-rank top${item.rank <= 3 ? item.rank : ''}">${item.rank}</div>
+                    <div class="hot-title">${item.title}</div>
+                </a>
+            `).join('');
+        }
+
+        function renderDailyRecs() {
+            const grid = document.getElementById('recGrid');
+            // 随机选3个工具
+            const shuffled = [...tools].sort(() => 0.5 - Math.random()).slice(0, 3);
+            grid.innerHTML = shuffled.map(t => `
+                <div class="rec-card">
+                    <div class="rec-icon"><i class="fas ${t.icon}"></i></div>
+                    <div>
+                        <div class="rec-name">${t.name}</div>
+                        <div class="rec-desc">${t.desc.substring(0, 30)}...</div>
+                    </div>
+                    <a href="${t.url}" target="_blank" class="rec-link">去访问</a>
+                </div>
+            `).join('');
+        }
+
+        function filterTools(categoryId) {
+            currentCategory = categoryId;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-category="${categoryId}"]`).classList.add('active');
+            renderTools();
+        }
+
+        function setupMusicPlayer() {
+            loadSong(currentSongIndex);
+            audioPlayer.addEventListener('ended', nextSong);
+        }
+
+        function loadSong(index) {
+            const song = songs[index];
+            audioPlayer.src = `${song.title}.mp3`;
+            document.getElementById('currentSongTitle').textContent = song.title;
+            document.getElementById('currentArtist').textContent = song.artist;
+        }
+
+        function togglePlay() {
+            if (audioPlayer.paused) {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                }).catch(e => alert('请检查MP3文件是否存在'));
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+
+        function prevSong() { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); if(isPlaying) audioPlayer.play(); }
+        function nextSong() { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); if(isPlaying) audioPlayer.play(); }
+
+        function setTheme(theme) {
+            document.body.classList.remove('theme-light', 'theme-pro');
+            if (theme !== 'dark') document.body.classList.add(`theme-${theme}`);
+            renderTools();
+        }
+
+        // 模态框逻辑
+        function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
+        function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
+        function openAboutUsModal() { document.getElementById('aboutUsModal').style.display = 'flex'; }
+        function closeAboutUsModal() { document.getElementById('aboutUsModal').style.display = 'none'; }
+        function openPrivacyModal() { document.getElementById('privacyModal').style.display = 'flex'; }
+        function closePrivacyModal() { document.getElementById('privacyModal').style.display = 'none'; }
+        function goToArticle(id) { window.location.href = `article.html?id=${id}`; }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
